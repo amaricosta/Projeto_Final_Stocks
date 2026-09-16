@@ -1,3 +1,4 @@
+from math import isfinite
 from modelos import Produto
 
 
@@ -26,14 +27,164 @@ def main():
             print("Programa terminado.")
             break
 
+        elif opcao == "1":
+            registar_produto(produtos)
+
+        elif opcao == "2":
+            mostrar_produtos(produtos)
+
+        elif opcao == "3":
+            pesquisar_produtos(produtos)
+
         elif opcao in (
-            "1", "2", "3", "4", "5",
+            "4", "5",
             "6", "7", "8", "9"
         ):
             print("Funcionalidade ainda não implementada.")
 
         else:
             print("Opção inválida.")
+
+
+def ler_texto(mensagem):
+    """Lê texto não vazio."""
+    while True:
+        texto = input(mensagem).strip()
+
+        if texto:
+            return texto
+
+        print("Preencha este campo com texto não vazio.")
+
+
+def ler_inteiro(mensagem, minimo):
+    while True:
+        try:
+            valor = int(input(mensagem))
+        except ValueError:
+            print("Introduza um número inteiro.")
+            continue
+
+        if valor >= minimo:
+            return valor
+
+        print(
+            f"Introduza um valor igual ou superior a {minimo}."
+        )
+
+
+def ler_preco(mensagem):
+    while True:
+        texto = input(mensagem).strip().replace(",", ".")
+
+        try:
+            valor = float(texto)
+        except ValueError:
+            print("Introduza um preço válido.")
+            continue
+
+        if isfinite(valor) and valor >= 0:
+            return round(valor, 2)
+
+        print("O preço deve ser finito e não negativo.")
+
+
+def procurar_por_codigo(produtos, codigo):
+    codigo = codigo.strip().upper()
+
+    for produto in produtos:
+        if produto.codigo == codigo:
+            return produto
+
+    return None
+
+
+def registar_produto(produtos):
+    codigo = ler_texto("Código: ").upper()
+
+    if procurar_por_codigo(produtos, codigo) is not None:
+        print("Já existe um produto com esse código.")
+        return
+
+    nome = ler_texto("Nome: ")
+    categoria = ler_texto("Categoria: ")
+    quantidade = ler_inteiro("Quantidade inicial: ", 0)
+    minimo = ler_inteiro("Stock mínimo: ", 0)
+    preco = ler_preco("Preço unitário: ")
+
+    produto = Produto(
+        codigo, nome, categoria,
+        quantidade, minimo, preco
+    )
+
+    produtos.append(produto)
+
+    print("Produto registado.")
+
+
+def formatar_euros(valor):
+    return f"{valor:.2f}".replace(".", ",") + " €"
+
+
+def descrever_produto(produto):
+    preco = formatar_euros(produto.preco_unitario)
+    valor = formatar_euros(produto.valor_em_stock())
+
+    return (
+        f"{produto.codigo} - {produto.nome} "
+        f"({produto.categoria})\n"
+        f"Quantidade: {produto.quantidade} | "
+        f"Mínimo: {produto.minimo}\n"
+        f"Preço unitário: {preco} | Valor em stock: {valor}"
+    )
+
+
+def mostrar_produtos(
+    produtos,
+    mensagem_vazia="Não existem produtos registados."
+):
+    if not produtos:
+        print(mensagem_vazia)
+        return
+
+    for numero, produto in enumerate(produtos, start=1):
+        print(f"\n{numero}. {descrever_produto(produto)}")
+
+
+def pesquisar_produtos(produtos):
+    if not produtos:
+        print("Não existem produtos registados.")
+        return
+
+    print("1 — Código")
+    print("2 — Parte do nome")
+    print("3 — Categoria")
+    print("0 — Voltar")
+
+    opcao = input("Pesquisar por: ").strip()
+
+    if opcao == "0":
+        return
+    if opcao == "1":
+        codigo = ler_texto("Código: ")
+        produto = procurar_por_codigo(produtos, codigo)
+
+        encontrados = []
+        if produto is not None:
+            encontrados.append(produto)
+
+    elif opcao in ("2", "3"):
+        print("Pesquisa ainda não implementada.")
+        return
+
+    else:
+        print("Opção inválida.")
+        return
+
+    mostrar_produtos(
+        encontrados, "Não foram encontrados produtos."
+    )
+
 
 if __name__ == "__main__":
     main()
