@@ -37,8 +37,13 @@ def main():
         elif opcao == "3":
             pesquisar_produtos(produtos)
 
+        elif opcao == "4":
+            movimentar_stock(produtos, "entrada")
+
+        elif opcao == "5":
+            movimentar_stock(produtos, "saida")
+
         elif opcao in (
-            "4", "5",
             "6", "7", "8", "9"
         ):
             print("Funcionalidade ainda não implementada.")
@@ -179,6 +184,38 @@ def pesquisar_produtos(produtos):
     mostrar_produtos(
         encontrados, "Não foram encontrados produtos."
     )
+
+
+def movimentar_stock(produtos, tipo):
+    if not produtos:
+        print("Não existem produtos registados.")
+        return
+
+    codigo = ler_texto("Código do produto: ")
+    produto = consultas.procurar_por_codigo(produtos, codigo)
+
+    if produto is None:
+        print("Produto não encontrado.")
+        return
+
+    quantidade = ler_inteiro(
+        "Quantidade do movimento: ", 1
+    )
+    if tipo == "entrada":
+        aceite = produto.registar_entrada(quantidade)
+    else:
+        aceite = produto.registar_saida(quantidade)
+
+    if aceite:
+        print(
+            f"Movimento registado. "
+            f"Stock atual: {produto.quantidade}."
+        )
+    else:
+        print(
+            "Saída recusada: stock insuficiente. "
+            "Quantidade inalterada."
+        )
 
 
 if __name__ == "__main__":
