@@ -43,8 +43,15 @@ def main():
         elif opcao == "5":
             movimentar_stock(produtos, "saida")
 
+        elif opcao == "6":
+            produtos_stock_baixo = consultas.selecionar_stock_baixo(produtos)
+            mostrar_produtos(
+                produtos_stock_baixo,
+                'Não existem produtos com stock baixo'
+            )
+
         elif opcao in (
-            "6", "7", "8", "9"
+            "7", "8", "9"
         ):
             print("Funcionalidade ainda não implementada.")
 

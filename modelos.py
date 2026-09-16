@@ -30,3 +30,6 @@ class Produto:
         self.quantidade -= quantidade
 
         return True
+
+    def stock_baixo(self):
+        return self.quantidade < self.minimo
