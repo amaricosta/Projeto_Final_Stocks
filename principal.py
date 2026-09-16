@@ -1,5 +1,6 @@
 from math import isfinite
 from modelos import Produto
+import consultas
 
 
 def apresentar_menu():
@@ -89,20 +90,10 @@ def ler_preco(mensagem):
         print("O preço deve ser finito e não negativo.")
 
 
-def procurar_por_codigo(produtos, codigo):
-    codigo = codigo.strip().upper()
-
-    for produto in produtos:
-        if produto.codigo == codigo:
-            return produto
-
-    return None
-
-
 def registar_produto(produtos):
     codigo = ler_texto("Código: ").upper()
 
-    if procurar_por_codigo(produtos, codigo) is not None:
+    if consultas.procurar_por_codigo(produtos, codigo) is not None:
         print("Já existe um produto com esse código.")
         return
 
@@ -167,13 +158,17 @@ def pesquisar_produtos(produtos):
         return
     if opcao == "1":
         codigo = ler_texto("Código: ")
-        produto = procurar_por_codigo(produtos, codigo)
+        produto = consultas.procurar_por_codigo(produtos, codigo)
 
         encontrados = []
         if produto is not None:
             encontrados.append(produto)
 
-    elif opcao in ("2", "3"):
+    elif opcao == "2":
+        texto = ler_texto("Parte do nome:")
+        encontrados = consultas.procurar_por_nome(produtos, texto)
+
+    elif opcao == "3":
         print("Pesquisa ainda não implementada.")
         return
 
