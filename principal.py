@@ -1,5 +1,3 @@
-
-
 from modelos import Produto
 
 
@@ -15,3 +13,27 @@ def apresentar_menu():
     print("8 — Guardar relatório de stock")
     print("9 — Ler o último relatório guardado")
     print("0 — Sair")
+
+
+def main():
+    produtos = []
+
+    while True:
+        apresentar_menu()
+        opcao = input("Opção: ").strip()
+
+        if opcao == "0":
+            print("Programa terminado.")
+            break
+
+        elif opcao in (
+            "1", "2", "3", "4", "5",
+            "6", "7", "8", "9"
+        ):
+            print("Funcionalidade ainda não implementada.")
+
+        else:
+            print("Opção inválida.")
+
+if __name__ == "__main__":
+    main()
