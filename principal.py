@@ -181,8 +181,10 @@ def pesquisar_produtos(produtos):
         encontrados = consultas.procurar_por_nome(produtos, texto)
 
     elif opcao == "3":
-        print("Pesquisa ainda não implementada.")
-        return
+        categoria = ler_texto("Categoria: ")
+        encontrados = consultas.procurar_por_categoria(
+            produtos, categoria
+        )
 
     else:
         print("Opção inválida.")
