@@ -1,6 +1,7 @@
 from math import isfinite
 from modelos import Produto
 import consultas
+import ficheiros
 
 
 def apresentar_menu():
@@ -50,10 +51,14 @@ def main():
                 'Não existem produtos com stock baixo'
             )
 
-        elif opcao in (
-            "7", "8", "9"
-        ):
-            print("Funcionalidade ainda não implementada.")
+        elif opcao == "7":
+            print("\n".join(linhas_estatisticas(produtos)))
+
+        elif opcao == "8":
+            guardar_relatorio_menu(produtos)
+
+        elif opcao == "9":
+            ler_relatorio_menu()
 
         else:
             print("Opção inválida.")
@@ -225,6 +230,91 @@ def movimentar_stock(produtos, tipo):
             "Saída recusada: stock insuficiente. "
             "Quantidade inalterada."
         )
+
+
+def linhas_estatisticas(produtos):
+    dados = consultas.calcular_estatisticas(produtos)
+    valor = formatar_euros(dados["valor_total"])
+
+    linhas = [
+        f"Produtos diferentes: {dados['total_produtos']}",
+        f"Total de unidades: {dados['total_unidades']}",
+        (
+            "Produtos com stock baixo: "
+            f"{dados['total_stock_baixo']}"
+        ),
+        f"Valor total do inventário: {valor}",
+        "Por categoria:",
+    ]
+    if not dados["por_categoria"]:
+        linhas.append("Sem categorias registadas.")
+
+    for grupo in dados["por_categoria"].values():
+        valor = formatar_euros(grupo["valor"])
+
+        linhas.append(
+            f"- {grupo['nome']}: "
+            f"{grupo['produtos']} produto(s), "
+            f"{grupo['unidades']} unidade(s), {valor}"
+        )
+
+    return linhas
+
+
+def preparar_relatorio(produtos):
+    linhas = ["RELATÓRIO DE STOCK", "", "PRODUTOS"]
+
+    if not produtos:
+        linhas.append("Não existem produtos registados.")
+
+    for produto in produtos:
+        linhas.append(descrever_produto(produto))
+
+    linhas.extend(["", "PRODUTOS COM STOCK BAIXO"])
+
+    baixos = consultas.selecionar_stock_baixo(produtos)
+    if not baixos:
+        linhas.append(
+            "Não existem produtos com stock baixo."
+        )
+
+    for produto in baixos:
+        linhas.append(descrever_produto(produto))
+
+    linhas.extend(["", "ESTATÍSTICAS"])
+    linhas.extend(linhas_estatisticas(produtos))
+
+    return "\n".join(linhas) + "\n"
+
+
+def guardar_relatorio_menu(produtos):
+    texto = preparar_relatorio(produtos)
+
+    try:
+        ficheiros.guardar_relatorio("relatorio_stock.txt", texto)
+    except OSError as erro:
+        print(f"Não foi possível guardar: {erro}")
+    else:
+        print(
+            "Relatório guardado em relatorio_stock.txt."
+        )
+
+
+def ler_relatorio_menu():
+    try:
+        texto = ficheiros.ler_relatorio("relatorio_stock.txt")
+
+    except FileNotFoundError:
+        print("Ainda não existe um relatório nesta pasta.")
+
+    except OSError as erro:
+        print(f"Não foi possível ler: {erro}")
+    except UnicodeError:
+        print("O ficheiro não contém texto válido em UTF-8.")
+
+    else:
+        print("Último relatório guardado.")
+        print(texto, end="")
 
 
 if __name__ == "__main__":

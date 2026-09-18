@@ -58,3 +58,18 @@ def agrupar_por_categoria(produtos):
         grupo["valor"] += produto.valor_em_stock()
 
     return categorias
+
+
+def calcular_estatisticas(produtos):
+    quantidades = [p.quantidade for p in produtos]
+    valores = [p.valor_em_stock() for p in produtos]
+
+    return {
+        "total_produtos": len(produtos),
+        "total_unidades": sum(quantidades),
+        "total_stock_baixo": len(
+            selecionar_stock_baixo(produtos)
+        ),
+        "valor_total": sum(valores),
+        "por_categoria": agrupar_por_categoria(produtos),
+    }

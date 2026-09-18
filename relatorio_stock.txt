@@ -1,0 +1,24 @@
+RELATÓRIO DE STOCK
+
+PRODUTOS
+P001 - Caderno (Papelaria)
+Quantidade: 60 | Mínimo: 10
+Preço unitário: 3,50 € | Valor em stock: 210,00 €
+P002 - Caneta (Papelaria)
+Quantidade: 30 | Mínimo: 10
+Preço unitário: 1,50 € | Valor em stock: 45,00 €
+L001 - Entendendo Algoritmos (Livros)
+Quantidade: 15 | Mínimo: 5
+Preço unitário: 32,50 € | Valor em stock: 487,50 €
+
+PRODUTOS COM STOCK BAIXO
+Não existem produtos com stock baixo.
+
+ESTATÍSTICAS
+Produtos diferentes: 3
+Total de unidades: 105
+Produtos com stock baixo: 0
+Valor total do inventário: 742,50 €
+Por categoria:
+- Papelaria: 2 produto(s), 90 unidade(s), 255,00 €
+- Livros: 1 produto(s), 15 unidade(s), 487,50 €
