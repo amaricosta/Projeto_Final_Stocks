@@ -5,7 +5,11 @@ import ficheiros
 
 
 def apresentar_menu():
-    print("\nGESTÃO DE STOCKS")
+    print()
+    print('='*38)
+    print("GESTÃO DE STOCKS".center(38))
+    print('='*38)
+    print()
     print("1 — Registar produto")
     print("2 — Listar produtos")
     print("3 — Pesquisar produtos")
@@ -23,7 +27,8 @@ def main():
 
     while True:
         apresentar_menu()
-        opcao = input("Opção: ").strip()
+        opcao = input("\nOpção: ").strip()
+        print()
 
         if opcao == "0":
             print("Programa terminado.")

@@ -1,39 +1,38 @@
-# Projeto_Final_Stocks
+# Projeto de gestão de stocks
 
-```markdown
-# Gestão de stocks
-
-Projeto desenvolvido na UFCD 10805 — Programação em Python.
-
-## Finalidade
-
-Gerir produtos e acompanhar as quantidades disponíveis.
-
-## Ficheiros
-
-- modelos.py: classe Produto.
-- principal.py: menu e coordenação do programa.
+Programa de consola para registar produtos, pesquisar,
+movimentar stock e consultar resultados.
 
 ## Execução
 
-Requer Python 3.
-Mantém os ficheiros na mesma pasta.
-Abre principal.py no Spyder e executa o ficheiro completo.
+1. Utilizar Python 3.
+2. Manter os ficheiros Python na mesma pasta.
+3. Abrir principal.py no Spyder.
+4. Confirmar a pasta de trabalho.
+5. Executar o ficheiro completo.
+6. Utilizar o menu e escolher 0 para terminar.
 
-## Estado atual
+## Testes
 
-- Classe Produto com os atributos iniciais.
-- Menu com repetição.
-- Tratamento de opções inválidas.
-- Opção de saída.
+Executar testes.py completo.
+Uma execução sem falhas termina com a mensagem
+"Todos os testes passaram.".
 
-## Funcionalidades por desenvolver
+## Preços e valor do inventário
 
-Registo, pesquisas, movimentos de stock,
-consultas, estatísticas, relatórios e testes.
+O preço representa o custo unitário de referência.
+O registo aceita vírgula ou ponto como separador decimal,
+sem separadores de milhares.
+O preço é arredondado para duas casas decimais no registo.
 
-## Dados
+O valor em stock resulta da quantidade multiplicada pelo preço.
+As entradas e saídas mantêm o preço unitário.
 
-O programa inicia com uma lista de produtos vazia.
-Nesta etapa, ainda não permite registar produtos.
-```
+## Relatório e dados entre execuções
+
+O programa guarda relatorio_stock.txt na pasta de trabalho.
+Cada gravação substitui o relatório anterior.
+
+A lista de produtos começa vazia em cada execução.
+Ler o relatório apresenta o texto guardado.
+Essa leitura não recupera os produtos para a lista.
